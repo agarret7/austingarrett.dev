@@ -2,11 +2,11 @@ import gql from "graphql-tag";
 
 const ARTICLES_QUERY = gql`  
   query Articles {
-    articles(sort: "published_at") {
+    articles(sort: "date") {
       id
       title
-      abstract
-      published_at
+      description
+      date
     }
   }
 `;

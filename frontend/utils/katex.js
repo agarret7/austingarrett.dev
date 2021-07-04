@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown";
 import TeX from '@matejmazur/react-katex';
 const RemarkMathPlugin = require('remark-math');
 
-const KATEX_MACROS = {
+  const KATEX_MACROS = {
   "\\E": "\\mathbb{E}",
   "\\sample": "\\sim",
   "\\paren": "\\left( #1 \\right)",

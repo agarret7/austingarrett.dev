@@ -9,14 +9,14 @@ const Card = ({ article }) => {
         <div className="uk-card uk-card-hover uk-card-body uk-padding-small">
           <div className="uk-child-width-expands@s" data-uk-grid>
             <div className="uk-width-auto">
-              <Moment className="uk-text-small uk-text-emphasis" format="MMM Do YYYY">{article.published_at}</Moment>
+              <Moment className="uk-text-small uk-text-emphasis" format="MMM Do YYYY">{article.date}</Moment>
             </div>
             <div className="uk-width-expand">
               <h3 className="uk-card-title">
                 {article.title}
               </h3>
               <p>
-                {article.abstract}
+                {article.description}
               </p>
             </div>
           </div>
