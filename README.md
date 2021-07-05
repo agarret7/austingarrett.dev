@@ -21,3 +21,5 @@ Afterwards, running
 `docker run -p 3000:3000 -v $(pwd)/frontend:/app -e API_URL=<strapi-url> -t austingarrett-dev`
 
 will allow you to locally develop the frontend using an arbitrary (potentially remote) backend.
+
+TODO: Integrate GitHub actions such that a merge into main triggers a deployment to a remote Docker context.
