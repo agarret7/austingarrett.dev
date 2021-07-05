@@ -2,9 +2,9 @@ version: '3'
 services:
   web:
     build: frontend
-    command: npm start
+    command: bash -c "npm run build && npm start"
     environment:
-      API_URL: http://strapi:1337
+      API_URL: http://localhost:1337
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -23,8 +23,10 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+    networks:
+      - strapi-app-network
     volumes:
-      - ./backend:/app
+      - ./backend:/srv/app
     ports:
       - '1337:1337'
     depends_on:
@@ -33,10 +35,19 @@ services:
   mysql:
     image: mysql
     command: mysqld --default-authentication-plugin=mysql_native_password
+    networks:
+      - strapi-app-network
     volumes:
-      - ./data:/var/lib/mysql
+      - strapidata:/data/db
     environment:
       MYSQL_ROOT_PASSWORD: strapi
       MYSQL_DATABASE: strapi
       MYSQL_USER: strapi
       MYSQL_PASSWORD: strapi
+
+networks:
+  strapi-app-network:
+    driver: bridge
+
+volumes:
+  strapidata:
