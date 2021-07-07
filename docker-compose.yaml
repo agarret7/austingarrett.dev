@@ -15,6 +15,7 @@ services:
 
   strapi:
     image: strapi/strapi
+    command: bash -c "yarn build && yarn start"
     environment:
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
@@ -23,6 +24,7 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+      NODE_ENV: production
     networks:
       - strapi-app-network
     volumes:
