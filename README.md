@@ -8,7 +8,7 @@ The frontend will be located at `http://localhost:3000` and the backend will be 
 
 # Restoring backend content
 
-The Docker volume `austingarrettdev_strapidata` contains all content; simply copy that volume from some other instance to your localhost Docker engine, and the content will be transferred.
+The Docker volume `austingarrettdev_strapidata` contains everything; simply copy that volume from some other instance to your local Docker instance, and admin profiles, data types, and content will be transferred.
 
 # Development
 
