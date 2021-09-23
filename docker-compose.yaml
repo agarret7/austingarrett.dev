@@ -15,7 +15,7 @@ services:
 
   strapi:
     image: strapi/strapi
-    command: bash -c "yarn build && yarn start"
+    command: bash -c "yarn install --frozen-lockfile && yarn build && yarn start"
     environment:
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
