@@ -1,15 +1,27 @@
 version: '3'
 services:
+  nginx:
+    image: jonasal/nginx-certbot:latest
+    environment:
+      CERTBOT_EMAIL: agarrett777@gmail.com
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+      - ./user_conf.d:/etc/nginx/user_conf.d
+    ports:
+      - 80:80
+      - 443:443
+
   web:
     build: frontend
     command: bash -c "npm run build && npm start"
     environment:
-      API_URL: http://localhost:1337
+      API_URL: http://45.55.41.131:1337
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "80:3000"
+
     depends_on:
       - strapi
 
@@ -50,3 +62,4 @@ networks:
 
 volumes:
   strapidata:
+  nginx_secrets:

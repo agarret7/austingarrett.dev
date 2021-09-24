@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   env: {
-    API_URL: process.env.API_URL || "http://localhost:1337"
+    API_URL: process.env.API_URL || "http://austingarrett.dev:1337"
   },
   webpack: (config, options) => {
     config.module.rules.push({
