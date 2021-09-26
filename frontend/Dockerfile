@@ -2,8 +2,9 @@ FROM node:14
 WORKDIR /app
 
 # installing dependencies
-COPY ./package.json ./
-RUN npm install
+RUN mkdir /deps
+COPY package.json /deps
+RUN npm install /deps
 
 # Running the app
-CMD [ "npm", "run", "dev" ]
+CMD bash -c "cp -r /deps/node_modules /app && npm run dev"

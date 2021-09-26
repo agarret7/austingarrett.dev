@@ -20,10 +20,13 @@ export default function MarkdownRender(props) {
       ...props.renderers,
       math: (props) => <TeX settings={{macros: KATEX_MACROS}} block>{props.value}</TeX>,
       inlineMath: (props) => <TeX settings={{macros: KATEX_MACROS}}>{props.value}</TeX>,
+      emphasis: (props) => <i style={{color: ''}}>{props.children}</i>
     },
-    escapeHtml: false
+    escapeHtml: false,
   };
   return (
-    <ReactMarkdown {...newProps} />
+      <ReactMarkdown
+        {...newProps}
+      />
   );
 };

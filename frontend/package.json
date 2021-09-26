@@ -31,9 +31,7 @@
     "react-mathjax2": "0.0.2",
     "react-moment": "^0.9.7",
     "rehype-katex": "^2.0.0",
-    "remark-math": "^2.0.0"
-  },
-  "devDependencies": {
+    "remark-math": "^2.0.0",
     "@svgr/webpack": "^5.2.0",
     "file-loader": "^6.0.0"
   }
