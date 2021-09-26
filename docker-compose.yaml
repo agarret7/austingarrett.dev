@@ -1,34 +1,69 @@
 version: '3'
 services:
-  nginx:
-    image: jonasal/nginx-certbot:latest
-    environment:
-      CERTBOT_EMAIL: agarrett777@gmail.com
-    volumes:
-      - nginx_secrets:/etc/letsencrypt
-      - ./user_conf.d:/etc/nginx/user_conf.d
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - proxy-network
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    restart: always
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    environment:
+      - DEFAULT_EMAIL=agarrett777@gmail.com
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy-network
+    restart: always
 
   web:
     build: frontend
+    container_name: web
     command: bash -c "npm run build && npm start"
     environment:
-      API_URL: http://45.55.41.131:1337
+      VIRTUAL_HOST: austingarrett.dev
+      LETSENCRYPT_HOST: austingarrett.dev
+      LETSENCRYPT_EMAIL: agarrett777@gmail.com
+      API_URL: https://strapi.austingarrett.dev
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "80:3000"
-
+      - "3000:3000"
     depends_on:
       - strapi
+    networks:
+      - proxy-network
+    restart: always
 
   strapi:
     image: strapi/strapi
+    container_name: strapi
     command: bash -c "yarn install --frozen-lockfile && yarn build && yarn start"
     environment:
+      VIRTUAL_HOST: austingarrett.dev,strapi.austingarrett.dev
+      LETSENCRYPT_HOST: austingarrett.dev,strapi.austingarrett.dev
+      LETSENCRYPT_EMAIL: agarrett777@gmail.com
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
       DATABASE_HOST: mongodb
@@ -39,13 +74,16 @@ services:
       NODE_ENV: production
     networks:
       - strapi-app-network
+      - proxy-network
     volumes:
       - ./backend:/srv/app
     ports:
       - '1337:1337'
+    restart: always
 
   mongodb:
     image: mongo
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: strapi
       MONGO_INITDB_ROOT_PASSWORD: strapi
@@ -55,11 +93,20 @@ services:
       - strapidata:/data/db
     ports:
       - "27017:27017"
+    restart: always
 
 networks:
   strapi-app-network:
     driver: bridge
+  proxy-network:
+    external:
+      name: nginx-proxy
 
 volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:
   strapidata:
-  nginx_secrets:
