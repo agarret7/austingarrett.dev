@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx-proxy:
-    image: nginxproxy/nginx-proxy
+    image: nginxproxy/nginx-proxy:dev
     container_name: nginx-proxy
     ports:
       - 80:80
@@ -20,7 +20,7 @@ services:
     restart: always
 
   acme-companion:
-    image: nginxproxy/acme-companion
+    image: nginxproxy/acme-companion:latest
     container_name: nginx-proxy-acme
     environment:
       - DEFAULT_EMAIL=agarrett777@gmail.com
@@ -42,9 +42,10 @@ services:
     command: bash -c "npm run build && npm start"
     environment:
       VIRTUAL_HOST: austingarrett.dev
+      VIRTUAL_PATH: /
       LETSENCRYPT_HOST: austingarrett.dev
       LETSENCRYPT_EMAIL: agarrett777@gmail.com
-      API_URL: https://strapi.austingarrett.dev
+      API_URL: https://austingarrett.dev/strapi
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -61,8 +62,10 @@ services:
     container_name: strapi
     command: bash -c "yarn install --frozen-lockfile && yarn build && yarn start"
     environment:
-      VIRTUAL_HOST: austingarrett.dev,strapi.austingarrett.dev
-      LETSENCRYPT_HOST: austingarrett.dev,strapi.austingarrett.dev
+      VIRTUAL_HOST: austingarrett.dev
+      LETSENCRYPT_HOST: austingarrett.dev
+      VIRTUAL_PATH: /strapi/
+      VIRTUAL_DEST: /
       LETSENCRYPT_EMAIL: agarrett777@gmail.com
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
