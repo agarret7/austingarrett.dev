@@ -1,6 +1,8 @@
 import ReactMarkdown from "react-markdown";  
 import TeX from '@matejmazur/react-katex';
 const RemarkMathPlugin = require('remark-math');
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { googlecode } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
   const KATEX_MACROS = {
   "\\E": "\\mathbb{E}",
@@ -20,7 +22,10 @@ export default function MarkdownRender(props) {
       ...props.renderers,
       math: (props) => <TeX settings={{macros: KATEX_MACROS}} block>{props.value}</TeX>,
       inlineMath: (props) => <TeX settings={{macros: KATEX_MACROS}}>{props.value}</TeX>,
-      emphasis: (props) => <i style={{color: ''}}>{props.children}</i>
+      emphasis: (props) => <i style={{color: ''}}>{props.children}</i>,
+      code: ({language, value}) => {
+        return <SyntaxHighlighter style={googlecode} language={language} children={value} />;
+      }
     },
     escapeHtml: false,
   };
