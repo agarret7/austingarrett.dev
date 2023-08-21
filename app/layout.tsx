@@ -12,7 +12,7 @@ const CV_URL = "https://austingarrett-web.s3.amazonaws.com/Garrett_Resume_01a882
 
 export const metadata: Metadata = {
   title: 'Austin Garrett',
-  description: 'Personal website of Austin Garrett',
+  description: 'Personal website and blog of Austin Garrett',
 }
 
 export default function RootLayout({
