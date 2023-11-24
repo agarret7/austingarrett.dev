@@ -8,7 +8,7 @@ import 'katex/dist/katex.min.css';
 import './global.css';
 
 
-const CV_URL = "https://austingarrett-web.s3.amazonaws.com/Garrett_Resume_01a88211ec.pdf"
+const CV_URL = "https://www.dropbox.com/scl/fi/y5fri4ty0amscoeepebmp/GarrettResume.pdf?rlkey=m0jk5ysm7jmiu7agfp5y5hzw1&dl=0"
 
 export const metadata: Metadata = {
   title: 'Austin Garrett',

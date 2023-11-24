@@ -5,7 +5,7 @@ date: March 13th 2020
 ---
 
 
-Importance sampling offers a highly general method for performing inference tasks over arbitrary distributions. While its validity in $\mathbb{R}^n$ is intuitive, when considering discrete structural choices with different sets of continuous parameters associated with them, we may question if the importance weighted approximation over their different measures is valid.
+Importance sampling offers a highly general method for performing inference tasks over arbitrary distributions. While its validity in $\mathbb{R}^n$ is intuitive, when considering discrete structural choices with different sets of continuous parameters associated with them, we may question if the importance-weighted approximation over their different measures is valid.
 
 Let's define a generative model under which we sample a discrete structure $k \sample p(\cdot)$ and a corresponding set of continous parameters, $\bm{\theta} \sample p(\cdot | k)$ of length $N_k$, under which we generate an observation $\mathcal{D} \sample p(\cdot | k, \bm{\theta})$. The full joint distribution is then
 $$
@@ -60,4 +60,4 @@ $$
 
 $\Box$
 
-We were able to avoid a measure-theoertic analysis by exploiting the factorization of the distribution. If the continous parameters are independent given a discrete structure choice, all we need to do is consider the expectations of the relevant distributions. Looks like we can rest easy using importance sampling for a simple branching model.
+We were able to avoid a measure-theoertic analysis by exploiting the factorization of the distribution. If the continous parameters are independent given a discrete structure choice, all we need to do is consider the expectations of the relevant distributions. We can be confident that given enough samples, importance sampling will find the true posterior.
